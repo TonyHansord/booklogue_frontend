@@ -1,22 +1,36 @@
-import logo from './logo.svg';
 import './App.css';
+import React, { useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Button from 'react-bootstrap/Button';
+import SignupLogin from './components/User/SignupLogin';
 
 function App() {
+  const [show, setShow] = useState(false);
+  const [authType, setAuthType] = useState('Log In');
+
+  const handleClose = () => setShow(false);
+  const handleShow = (authType) => {
+    setAuthType(authType);
+    setShow(true);
+  };
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+        <Button
+          variant="btn btn-outline-primary"
+          onClick={() => handleShow('Log In')}
         >
-          Learn React
-        </a>
+          Login
+        </Button>
+        <Button variant="btn btn-primary" onClick={() => handleShow('Sign Up')}>
+          Signup
+        </Button>
+        <SignupLogin
+          show={show}
+          handleClose={handleClose}
+          authType={authType}
+        />
       </header>
     </div>
   );
