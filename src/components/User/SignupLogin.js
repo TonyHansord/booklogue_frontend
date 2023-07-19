@@ -1,20 +1,32 @@
 import { Form } from 'react-bootstrap';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-function SignupLogin({ authType, show, handleClose, setIsLoggedIn }) {
+function SignupLogin({
+  authType,
+  show,
+  handleClose,
+  setIsLoggedIn,
+  setUserName,
+}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [name, setName] = useState('');
   const [errormessage, setErrorMessage] = useState('');
 
+  const navigate = useNavigate();
+
   const handleResponse = (res) => {
     if (res.status === 200) {
-      console.log(res.json());
-      setIsLoggedIn(true);
-      handleClose();
+      res.json().then((data) => {
+        setUserName(data.name);
+        setIsLoggedIn(true);
+        navigate('/me');
+        handleClose();
+      });
     } else {
       res.json().then((data) => {
         console.log(data.errors[0]);

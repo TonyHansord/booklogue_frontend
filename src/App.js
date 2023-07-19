@@ -1,63 +1,74 @@
 import './App.css';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Button from 'react-bootstrap/Button';
-import SignupLogin from './components/User/SignupLogin';
+import NavBar from './components/NavBar';
+import UserHome from './components/User/UserHome';
 
 function App() {
-  const [show, setShow] = useState(false);
-  const [authType, setAuthType] = useState('Log In');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [userName, setUserName] = useState('');
 
-  const handleClose = () => setShow(false);
-  const handleShow = (authType) => {
-    setAuthType(authType);
-    setShow(true);
-  };
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    fetch('/me')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.name) {
+          setUserName(data.name);
+          setIsLoggedIn(true);
+          navigate('/me');
+        } else {
+          setUserName('');
+          setIsLoggedIn(false);
+          navigate('/');
+        }
+      });
+  }, [navigate]);
+
   const handleLogout = () => {
     fetch('/logout', {
       method: 'DELETE',
     })
       .then((res) => res.json())
-      .then((data) => console.log(data.message))
-      .then(setIsLoggedIn(false));
+      .then((data) => {
+        console.log(data.message);
+        setUserName('');
+        setIsLoggedIn(false);
+        navigate('/');
+      });
   };
 
   return (
     <div className="App">
-      <header className="App-header">
-        {isLoggedIn ? (
-          <Button
-            variant="btn btn-outline-primary"
-            onClick={() => handleLogout()}
-          >
-            Log Out
-          </Button>
-        ) : (
-          <Button
-            variant="btn btn-outline-primary"
-            onClick={() => handleShow('Log In')}
-          >
-            Log In
-          </Button>
-        )}
-
-        {isLoggedIn ? null : (
-          <Button
-            variant="btn btn-primary"
-            onClick={() => handleShow('Sign Up')}
-          >
-            Signup
-          </Button>
-        )}
-
-        <SignupLogin
-          show={show}
-          handleClose={handleClose}
-          authType={authType}
-          setIsLoggedIn={setIsLoggedIn}
-        />
-      </header>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <NavBar
+              isLoggedIn={isLoggedIn}
+              setIsLoggedIn={setIsLoggedIn}
+              setUserName={setUserName}
+              handleLogout={handleLogout}
+            />
+          }
+        ></Route>
+        <Route
+          path="/me"
+          element={
+            <>
+              <NavBar
+                isLoggedIn={isLoggedIn}
+                setIsLoggedIn={setIsLoggedIn}
+                setUserName={setUserName}
+                handleLogout={handleLogout}
+              />
+              <UserHome userName={userName} />
+            </>
+          }
+        ></Route>
+      </Routes>
     </div>
   );
 }
