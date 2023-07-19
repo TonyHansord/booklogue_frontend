@@ -3,11 +3,25 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-function SignupLogin({ authType, show, handleClose }) {
+function SignupLogin({ authType, show, handleClose, setIsLoggedIn }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [name, setName] = useState('');
+  const [errormessage, setErrorMessage] = useState('');
+
+  const handleResponse = (res) => {
+    if (res.status === 200) {
+      console.log(res.json());
+      setIsLoggedIn(true);
+      handleClose();
+    } else {
+      res.json().then((data) => {
+        console.log(data.errors[0]);
+        setErrorMessage(data.errors[0]);
+      });
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -25,11 +39,9 @@ function SignupLogin({ authType, show, handleClose }) {
           password: password,
           confirmPassword: confirmPassword,
         }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-        });
+      }).then((res) => {
+        handleResponse(res);
+      });
     } else {
       fetch('/login', {
         method: 'POST',
@@ -40,14 +52,10 @@ function SignupLogin({ authType, show, handleClose }) {
           email: email,
           password: password,
         }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-        });
+      }).then((res) => {
+        handleResponse(res);
+      });
     }
-
-    handleClose();
   };
 
   return (
@@ -106,7 +114,7 @@ function SignupLogin({ authType, show, handleClose }) {
             </Form.Group>
 
             {authType === 'Sign Up' ? (
-              <Form.Group controlId="formBasicPassword">
+              <Form.Group controlId="formConfirmPassword">
                 <Form.Label>Confirm Password</Form.Label>
                 <Form.Control
                   required
@@ -122,12 +130,16 @@ function SignupLogin({ authType, show, handleClose }) {
               </Form.Group>
             ) : null}
 
-            <Button variant="secondary" type="submit">
-              {authType}
-            </Button>
-            <Button variant="primary" onClick={handleClose}>
-              Cancel
-            </Button>
+            <p className="error">{errormessage}</p>
+
+            <div>
+              <Button variant="secondary" type="submit">
+                {authType}
+              </Button>
+              <Button variant="primary" onClick={handleClose}>
+                Cancel
+              </Button>
+            </div>
           </Form>
         </Modal.Body>
       </Modal>
