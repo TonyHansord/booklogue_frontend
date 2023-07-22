@@ -20,7 +20,8 @@ function SignupLogin({
   const navigate = useNavigate();
 
   const handleResponse = (res) => {
-    if (res.status === 200) {
+    console.log(res.status);
+    if (res.status === 201 || 200) {
       res.json().then((data) => {
         setUserName(data.name);
         setIsLoggedIn(true);
