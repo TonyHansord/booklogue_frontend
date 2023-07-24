@@ -4,6 +4,8 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from './components/NavBar';
 import UserHome from './components/User/UserHome';
+import AllBooks from './components/Book/AllBooks';
+import MyBooks from './components/Book/MyBooks';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
@@ -25,7 +27,8 @@ function App() {
           navigate('/');
         }
       });
-  }, [navigate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleLogout = () => {
     fetch('/logout', {
@@ -65,6 +68,22 @@ function App() {
                 handleLogout={handleLogout}
               />
               <UserHome userName={userName} />
+              <AllBooks />
+            </>
+          }
+        ></Route>
+        <Route
+          path="/me/books"
+          element={
+            <>
+              <NavBar
+                isLoggedIn={isLoggedIn}
+                setIsLoggedIn={setIsLoggedIn}
+                setUserName={setUserName}
+                handleLogout={handleLogout}
+              />
+              <UserHome userName={userName} />
+              <MyBooks />
             </>
           }
         ></Route>
