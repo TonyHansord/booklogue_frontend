@@ -49,12 +49,15 @@ function App() {
         <Route
           path="/"
           element={
-            <NavBar
-              isLoggedIn={isLoggedIn}
-              setIsLoggedIn={setIsLoggedIn}
-              setUserName={setUserName}
-              handleLogout={handleLogout}
-            />
+            <>
+              <NavBar
+                isLoggedIn={isLoggedIn}
+                setIsLoggedIn={setIsLoggedIn}
+                setUserName={setUserName}
+                handleLogout={handleLogout}
+              />
+              <AllBooks />
+            </>
           }
         ></Route>
         <Route

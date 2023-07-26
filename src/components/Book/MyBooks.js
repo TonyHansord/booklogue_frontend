@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Container } from 'react-bootstrap';
+import { Row, Col, Container, Button } from 'react-bootstrap';
 import Book from './Book';
-// import AddNote from '../Notes/AddNote';
+import AddBook from './AddBook';
+import AddNote from '../Notes/AddNote';
 
 function MyBooks() {
+  const [showAddBook, setShowAddBook] = useState(false);
+
   const [myBooks, setMyBooks] = useState([]);
+
+  const handleCloseAddBook = () => setShowAddBook(false);
+  const handleShowAddBook = () => setShowAddBook(true);
 
   useEffect(() => {
     fetch('/me/books')
@@ -12,23 +18,24 @@ function MyBooks() {
       .then((data) => {
         setMyBooks(data);
       });
-  }, []);
+  }, [showAddBook]);
 
   const renderBooks = (books) => {
     return books.map((book) => {
-      return (
-        <Book
-          key={book.id}
-          book={book}
-          bookType={'my'}
-          handleAdd={() => console.log('AddNote')}
-        />
-      );
+      return <Book key={book.id} book={book} bookType={'my'} />;
     });
   };
 
   return (
     <Container className="border border-3 border-info-subtle rounded">
+      <Row>
+        <Col className="border-end">
+          <Button className="mx-2" onClick={handleShowAddBook}>
+            Add New Book
+          </Button>
+        </Col>
+      </Row>
+
       <Row>
         <Col className="border-end">
           <p className="text-start px-2">Title</p>
@@ -44,6 +51,8 @@ function MyBooks() {
         </Col>
       </Row>
       {renderBooks(myBooks)}
+
+      <AddBook show={showAddBook} handleClose={handleCloseAddBook} />
     </Container>
   );
 }
