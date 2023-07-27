@@ -1,7 +1,8 @@
-function Note() {
+function Note({ note }) {
   return (
     <div>
-      <h1>Note</h1>
+      <h1>{note.subject}</h1>
+      <p>{note.content}</p>
     </div>
   );
 }

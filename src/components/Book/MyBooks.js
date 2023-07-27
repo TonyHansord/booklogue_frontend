@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Row, Col, Container, Button } from 'react-bootstrap';
 import Book from './Book';
 import AddBook from './AddBook';
-import AddNote from '../Notes/AddNote';
 
-function MyBooks() {
+function MyBooks({ setSelectedBook }) {
   const [showAddBook, setShowAddBook] = useState(false);
 
   const [myBooks, setMyBooks] = useState([]);
@@ -22,7 +21,14 @@ function MyBooks() {
 
   const renderBooks = (books) => {
     return books.map((book) => {
-      return <Book key={book.id} book={book} bookType={'my'} />;
+      return (
+        <Book
+          key={book.id}
+          book={book}
+          bookType={'my'}
+          setSelectedBook={setSelectedBook}
+        />
+      );
     });
   };
 

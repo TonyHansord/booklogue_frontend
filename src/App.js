@@ -5,10 +5,12 @@ import './App.css';
 import NavBar from './components/NavBar';
 import AllBooks from './components/Book/AllBooks';
 import MyBooks from './components/Book/MyBooks';
+import BookInfo from './components/Book/BookInfo';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [userName, setUserName] = useState('');
+  const [selectedBook, setSelectedBook] = useState({});
 
   const navigate = useNavigate();
 
@@ -85,12 +87,26 @@ function App() {
                 handleLogout={handleLogout}
                 userName={userName}
               />
-              <MyBooks />
+              <MyBooks setSelectedBook={setSelectedBook} />
             </>
           }
         ></Route>
 
-        <Route path="/me/:book_id/notes" element={<></>}></Route>
+        <Route
+          path="/me/books/:book_id"
+          element={
+            <>
+              <NavBar
+                isLoggedIn={isLoggedIn}
+                setIsLoggedIn={setIsLoggedIn}
+                setUserName={setUserName}
+                handleLogout={handleLogout}
+                userName={userName}
+              />
+              <BookInfo book={selectedBook} />
+            </>
+          }
+        ></Route>
       </Routes>
     </div>
   );
