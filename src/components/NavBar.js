@@ -11,6 +11,14 @@ function NavBar({ isLoggedIn, setIsLoggedIn, setUserName, handleLogout }) {
     setAuthType(authType);
     setShow(true);
   };
+  
+  const renderLoggedIn() {
+  
+  }
+  
+  const renderLoggedOut() {
+  
+  }
 
   return (
     <header className="App-header">

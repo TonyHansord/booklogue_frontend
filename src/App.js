@@ -90,6 +90,13 @@ function App() {
             </>
           }
         ></Route>
+        
+        <Route path="/me/:book_id/notes"
+        element={
+        <>
+         </>
+         }
+         ></Route> 
       </Routes>
     </div>
   );
