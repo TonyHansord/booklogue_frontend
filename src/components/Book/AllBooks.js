@@ -46,6 +46,11 @@ function AllBooks() {
   return (
     <Container className="border border-3 border-info-subtle rounded">
       <Row>
+        <Col>
+          <h3 className="text-center">Recently Added</h3>
+        </Col>
+      </Row>
+      <Row>
         <Col className="border-end">
           <p className="text-start px-2">Title</p>
         </Col>

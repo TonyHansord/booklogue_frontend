@@ -1,9 +1,8 @@
-import './App.css';
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
 import NavBar from './components/NavBar';
-import UserHome from './components/User/UserHome';
 import AllBooks from './components/Book/AllBooks';
 import MyBooks from './components/Book/MyBooks';
 
@@ -69,8 +68,8 @@ function App() {
                 setIsLoggedIn={setIsLoggedIn}
                 setUserName={setUserName}
                 handleLogout={handleLogout}
+                userName={userName}
               />
-              <UserHome userName={userName} />
               <AllBooks />
             </>
           }
@@ -84,19 +83,14 @@ function App() {
                 setIsLoggedIn={setIsLoggedIn}
                 setUserName={setUserName}
                 handleLogout={handleLogout}
+                userName={userName}
               />
-              <UserHome userName={userName} />
               <MyBooks />
             </>
           }
         ></Route>
-        
-        <Route path="/me/:book_id/notes"
-        element={
-        <>
-         </>
-         }
-         ></Route> 
+
+        <Route path="/me/:book_id/notes" element={<></>}></Route>
       </Routes>
     </div>
   );
