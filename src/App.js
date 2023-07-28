@@ -21,7 +21,7 @@ function App() {
         if (data.name) {
           setUserName(data.name);
           setIsLoggedIn(true);
-          navigate('/me');
+          // navigate('/me');
         } else {
           setUserName('');
           setIsLoggedIn(false);
@@ -103,7 +103,7 @@ function App() {
                 handleLogout={handleLogout}
                 userName={userName}
               />
-              <BookInfo book={selectedBook} />
+              <BookInfo bookID={selectedBook.id} />
             </>
           }
         ></Route>

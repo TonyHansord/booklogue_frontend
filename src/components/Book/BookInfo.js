@@ -1,9 +1,35 @@
+import { useEffect, useState } from 'react';
 import Note from '../Notes/Note';
+import { Row, Col, Button, Container } from 'react-bootstrap';
+import { useNavigate, useParams } from 'react-router-dom';
 
-function BookInfo({ book }) {
-  const bookTitle = book.title;
-  const bookAuthor = book.authors[0].full_name;
-  const bookGenre = book.genre.name;
+function BookInfo({ bookID }) {
+  const [book, setBook] = useState({});
+  const [bookTitle, setBookTitle] = useState('');
+  const [bookAuthor, setBookAuthor] = useState('');
+  const [bookGenre, setBookGenre] = useState('');
+  const [bookNotes, setBookNotes] = useState([]);
+
+  const navigate = useNavigate();
+
+  const { book_id } = useParams();
+
+  const id = book_id ? book_id : bookID;
+
+  useEffect(() => {
+    // console.log(params);
+    fetch(`/me/books/${id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setBook(data);
+        setBookTitle(data.title);
+        setBookAuthor(data.authors[0].full_name);
+        setBookGenre(data.genre.name);
+        setBookNotes(data.notes);
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const renderNotes = (notes) => {
     return notes.map((note) => {
@@ -11,14 +37,29 @@ function BookInfo({ book }) {
     });
   };
 
-  return (
-    <div>
-      <h1>{bookTitle}</h1>
-      <h2>{bookAuthor}</h2>
-      <h3>{bookGenre}</h3>
+  const handleDelete = () => {
+    fetch(`/me/books/${book.id}`, {
+      method: 'DELETE',
+    }).then((res) => {
+      if (res.ok) {
+        navigate('/me/books');
+      }
+    });
+  };
 
-      {renderNotes(book.notes)}
-    </div>
+  return (
+    <Container>
+      <h1 className="text-left">{bookTitle}</h1>
+      <h2 className="text-left">{bookAuthor}</h2>
+      <h3 className="text-left">{bookGenre}</h3>
+
+      <Button onClick={handleDelete} variant="danger">
+        Delete Book
+      </Button>
+
+      <h3 className="text-center">Notes</h3>
+      {renderNotes(bookNotes)}
+    </Container>
   );
 }
 
