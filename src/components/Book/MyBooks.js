@@ -12,7 +12,7 @@ function MyBooks({ setSelectedBook }) {
   const handleShowAddBook = () => setShowAddBook(true);
 
   useEffect(() => {
-    fetch('https://booklogue-backend.onrender.com/me/books')
+    fetch('/me/books')
       .then((res) => res.json())
       .then((data) => {
         setMyBooks(data);

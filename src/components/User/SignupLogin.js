@@ -41,7 +41,7 @@ function SignupLogin({
     console.log('submit');
 
     if (authType === 'Sign Up') {
-      fetch('https://booklogue-backend.onrender.com/signup', {
+      fetch('/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -56,7 +56,7 @@ function SignupLogin({
         handleResponse(res);
       });
     } else {
-      fetch('https://booklogue-backend.onrender.com/login', {
+      fetch('/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

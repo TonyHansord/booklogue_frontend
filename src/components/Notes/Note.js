@@ -2,7 +2,7 @@ import { Button } from 'react-bootstrap';
 
 function Note({ note }) {
   function handleDelete() {
-    fetch(`https://booklogue-backend.onrender.com/me/notes/${note.id}`, {
+    fetch(`/me/notes/${note.id}`, {
       method: 'DELETE',
     }).then((res) => {
       if (res.ok) {

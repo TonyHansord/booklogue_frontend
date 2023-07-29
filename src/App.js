@@ -8,20 +8,21 @@ import MyBooks from './components/Book/MyBooks';
 import BookInfo from './components/Book/BookInfo';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState('');
   const [selectedBook, setSelectedBook] = useState({});
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('https://booklogue-backend.onrender.com/me')
+    fetch('/me')
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         if (data.name) {
           setUserName(data.name);
           setIsLoggedIn(true);
-          // navigate('/me');
+          navigate('/me');
         } else {
           setUserName('');
           setIsLoggedIn(false);
@@ -32,7 +33,7 @@ function App() {
   }, []);
 
   const handleLogout = () => {
-    fetch('https://booklogue-backend.onrender.com/logout', {
+    fetch('/logout', {
       method: 'DELETE',
     })
       .then((res) => res.json())

@@ -6,7 +6,7 @@ function AllBooks() {
   const [books, setBooks] = useState([]);
 
   useEffect(() => {
-    fetch('https://booklogue-backend.onrender.com/books')
+    fetch('/books')
       .then((res) => res.json())
       .then((data) => {
         setBooks(data);
@@ -15,7 +15,7 @@ function AllBooks() {
 
   const handleAddToMyBooks = (book) => {
     console.log('add to my books');
-    fetch(`https://booklogue-backend.onrender.com/books/${book.id}`, {
+    fetch(`/books/${book.id}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
