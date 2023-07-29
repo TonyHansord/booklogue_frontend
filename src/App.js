@@ -15,7 +15,7 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('/me')
+    fetch('https://booklogue-backend.onrender.com/me')
       .then((res) => res.json())
       .then((data) => {
         if (data.name) {
@@ -32,7 +32,7 @@ function App() {
   }, []);
 
   const handleLogout = () => {
-    fetch('/logout', {
+    fetch('https://booklogue-backend.onrender.com/logout', {
       method: 'DELETE',
     })
       .then((res) => res.json())

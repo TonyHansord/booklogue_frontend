@@ -9,7 +9,7 @@ function AddBook({ show, handleClose }) {
   const [genreID, setGenreID] = useState(1);
 
   useEffect(() => {
-    fetch('/genres')
+    fetch('https://booklogue-backend.onrender.com/genres')
       .then((res) => res.json())
       .then((data) => {
         setGenreList(data);
@@ -23,7 +23,7 @@ function AddBook({ show, handleClose }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    fetch('/authors', {
+    fetch('https://booklogue-backend.onrender.com/authors', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

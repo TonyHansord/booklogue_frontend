@@ -8,7 +8,7 @@ function AddNote({ book, handleClose, show }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    fetch('/me/notes', {
+    fetch('https://booklogue-backend.onrender.com/me/notes', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

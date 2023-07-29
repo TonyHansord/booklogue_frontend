@@ -18,7 +18,7 @@ function BookInfo({ bookID }) {
 
   useEffect(() => {
     // console.log(params);
-    fetch(`/me/books/${id}`)
+    fetch(`https://booklogue-backend.onrender.com/me/books/${id}`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -38,7 +38,7 @@ function BookInfo({ bookID }) {
   };
 
   const handleDelete = () => {
-    fetch(`/me/books/${book.id}`, {
+    fetch(`https://booklogue-backend.onrender.com/me/books/${book.id}`, {
       method: 'DELETE',
     }).then((res) => {
       if (res.ok) {
