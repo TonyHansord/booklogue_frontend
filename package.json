@@ -19,7 +19,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "proxy": "https://booklogue.render.com"
+    "proxy": "https://booklogue-backend.render.com"
   },
   "eslintConfig": {
     "extends": [
